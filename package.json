@@ -22,29 +22,30 @@
     "predeploy": "cd example && npm install && npm run build",
     "deploy": "gh-pages -d example/build"
   },
-  "dependencies": {
-    "pluggy-connect-sdk": "^1.1.1",
-    "react-script-hook": "^1.6.0"
-  },
   "devDependencies": {
     "@babel/core": "^7.2.2",
     "@babel/runtime": "^7.3.1",
     "@rollup/plugin-babel": "^5.2.0",
     "@rollup/plugin-commonjs": "^15.0.0",
     "@rollup/plugin-node-resolve": "^9.0.0",
-    "@rollup/plugin-typescript": "^5.0.2",
+    "@rollup/plugin-typescript": "^11.1.2",
     "@rollup/plugin-url": "^5.0.1",
     "@testing-library/react-hooks": "^3.2.1",
     "@types/jest": "^23.3.13",
     "@types/react": "^16.7.22",
-    "cross-env": "^5.2.0",
+    "cross-env": "^7.0.3",
     "gh-pages": "^2.0.1",
-    "react": "^18.2.0",
-    "react-scripts": "^3.4.0",
-    "react-test-renderer": "^16.9.0",
+    "react-test-renderer": "^18.2.0",
     "rollup": "^2.26.9",
     "rollup-plugin-peer-deps-external": "^2.2.0",
     "tslib": "^2.0.1",
-    "typescript": "^3.2.4"
+    "typescript": "^5.1.6"
+  },
+  "peerDependencies": {
+    "react": "^18.2.0",
+    "react-scripts": "^5.0.1"
+  },
+  "dependencies": {
+    "pluggy-connect-sdk": "^2.7.0"
   }
 }

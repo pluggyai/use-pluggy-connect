@@ -1,78 +1,58 @@
-import { useEffect, useState } from "react";
-
+import { useEffect, useState, useCallback } from 'react'
 import {
   PluggyConnectProps as PluggyConnectProps_,
   PluggyConnect as PluggyConnectBase,
-} from "pluggy-connect-sdk";
-import useScript from "react-script-hook";
+} from 'pluggy-connect-sdk'
 
-/*! re-export types to keep same interface */
-export type PluggyConnectProps = PluggyConnectProps_;
+export type PluggyConnectProps = PluggyConnectProps_
 
-const PLUGGY_CONNECT_URL =
-  "https://cdn.pluggy.ai/pluggy-connect/v1.3.1/pluggy-connect.js";
-
-const noop = () => {};
+const noop = () => {}
 
 export const usePluggyConnect = (options: PluggyConnectProps) => {
-  const { connectToken, allowConnectInBackground, includeSandbox, url, env } =
-    options;
-
-  // checking if window is defined to make it work in SSR
-  if (typeof window === "undefined") {
-    // no window, just return
-    return;
-  }
-  // Asynchronously load the PluggyConnect url into the DOM
-  const [loading, error] = useScript({
-    src: PLUGGY_CONNECT_URL,
-    checkForExisting: true,
-  });
-
-  // internal state to check if pluggy connect is loaded
-  const [pluggyConnect, setPluggyConnect] = useState<
-    PluggyConnectBase | undefined
-  >();
+  const [error, setError] = useState<Error | null>(null)
+  const [pluggyConnect, setPluggyConnect] = useState<PluggyConnectBase | null>(
+    null
+  )
 
   useEffect(() => {
-    if (loading) {
-      // script loading -> just return
-      return;
-    }
-    if (error) {
-      throw new Error("Fail to load PluggyConnect into the DOM");
-    }
-    if (pluggyConnect) {
-      // connect already loaded, destroy it
-      pluggyConnect.destroy();
-    }
-    const pluggy = new PluggyConnectBase(options);
-
-    setPluggyConnect(pluggy);
-  }, [
-    loading,
-    error,
-    connectToken,
-    allowConnectInBackground,
-    includeSandbox,
-    url,
-    env,
-  ]);
-
-  const initNoOp = () => {
     if (!options.connectToken) {
       console.warn(
-        "use-pluggy-connect: You cannot call init() without a valid connectToken supplied to usePluggyConnect. This is a no-op."
-      );
+        'use-pluggy-connect: You need a valid connectToken for usePluggyConnect.'
+      )
+      return
     }
-  };
 
-  const ready = pluggyConnect && !loading;
+    const pluggyConnect_ = new PluggyConnectBase(options)
+    setPluggyConnect(pluggyConnect_)
+  }, [options.connectToken])
+
+  const init = useCallback(() => {
+    if (!pluggyConnect) {
+      console.warn(
+        "use-pluggy-connect: PluggyConnect instance isn't ready yet."
+      )
+      return
+    }
+
+    try {
+      const containerElement =
+        document.body ||
+        document.documentElement ||
+        document.getElementsByTagName('div')[0]
+      pluggyConnect.init(containerElement)
+    } catch (e) {
+      if (e instanceof Error) {
+        console.error('Failed to initialize PluggyConnect', e)
+        setError(e)
+      }
+    }
+  }, [pluggyConnect])
 
   return {
-    ready,
+    init,
     error,
-    init: pluggyConnect ? pluggyConnect.init : initNoOp,
+    ready: Boolean(pluggyConnect),
     show: pluggyConnect ? pluggyConnect.show : noop,
-  };
-};
+    hide: pluggyConnect ? pluggyConnect.hide : noop,
+  }
+}

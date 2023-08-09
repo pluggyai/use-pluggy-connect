@@ -13,16 +13,20 @@ npm install --save use-pluggy-connect
 ## Usage
 
 ```tsx
-import * as React from 'react'
+import React, { useCallback } from 'react'
 
-import { useMyHook } from 'use-pluggy-connect'
+import { usePluggyConnect } from 'use-pluggy-connect'
 
-const Example = () => {
-  const handleEvent = useCallback((event) => {
-    console.log(`[Event]: ${event}`);
+const App = () => {
+  const handleEvent = useCallback((payload) => {
+    console.log(`[Event]: ${payload}`)
   }, [])
 
-  const { init, error, ready } = usePluggyConnect({ url: "https://connect.pluggy.ai", connectToken: 'eyJhbGciOiJSUzI1NiIsIn...', onEvent: handleEvent })
+  const { init, error, ready } = usePluggyConnect({
+    url: 'https://connect.pluggy.dev',
+    connectToken: 'eyJhbGciOiJSUzI1NiIsInR5cCI6IJ9...',
+    onEvent: handleEvent,
+  })
 
   if (!ready) {
     return <div>Loading...</div>
@@ -36,4 +40,5 @@ const Example = () => {
     </div>
   )
 }
+export default App
 ```
