@@ -4,7 +4,7 @@
   "description": "React hook to integrate Pluggy Connect.",
   "author": "NicolasMontone",
   "license": "MIT",
-  "repository": "pluggy/use-pluggy-connect",
+  "repository": "pluggyai/use-pluggy-connect",
   "main": "dist/index.js",
   "module": "dist/index.es.js",
   "types": "dist/index.d.ts",
