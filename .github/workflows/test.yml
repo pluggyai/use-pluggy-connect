@@ -17,5 +17,8 @@ jobs:
           node-version: 16
       - name: Install dependencies
         run: npm ci --legacy-peer-deps
+      # TODO: fix peer dependencies
+      - name: Install peer dependencies
+        run: npm install react@^18.2.0 react-scripts@^5.0.1
       - name: Test
         run: npm test
