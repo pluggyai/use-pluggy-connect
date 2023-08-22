@@ -1,6 +1,6 @@
 {
   "name": "use-pluggy-connect",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "React hook to integrate Pluggy Connect.",
   "author": "NicolasMontone",
   "license": "MIT",
@@ -10,8 +10,8 @@
   "types": "dist/index.d.ts",
   "jsnext:main": "dist/index.es.js",
   "engines": {
-    "node": ">=8",
-    "npm": ">=5"
+    "semantic-release": "semantic-release",
+    "node": ">=16"
   },
   "scripts": {
     "test": "cross-env CI=1 react-scripts test --env=jsdom",
@@ -30,6 +30,11 @@
     "@rollup/plugin-node-resolve": "^9.0.0",
     "@rollup/plugin-typescript": "^11.1.2",
     "@rollup/plugin-url": "^5.0.1",
+    "@semantic-release/commit-analyzer": "^10.0.1",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/github": "^9.0.4",
+    "@semantic-release/npm": "^10.0.5",
+    "@semantic-release/release-notes-generator": "^11.0.4",
     "@testing-library/react-hooks": "^3.2.1",
     "@types/jest": "^23.3.13",
     "@types/react": "^16.7.22",
@@ -47,5 +52,26 @@
   },
   "dependencies": {
     "pluggy-connect-sdk": "^2.7.0"
+  },
+  "release": {
+    "branches": [
+      "+([0-9])?(.{+([0-9]),x}).x",
+      "master"
+    ],
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      "@semantic-release/npm",
+      "@semantic-release/github",
+      [
+        "@semantic-release/git",
+        {
+          "assets": [
+            "package.json"
+          ],
+          "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
+        }
+      ]
+    ]
   }
 }
