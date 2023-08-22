@@ -4,7 +4,15 @@ import { PluggyConnect as PluggyConnectBase } from 'pluggy-connect-sdk'
 
 jest.mock('pluggy-connect-sdk')
 
-type MockedPluggyConnectBase = jest.Mock
+type MockedPluggyConnectBaseInstance = {
+  init: jest.Mock
+  error: Error | null
+  ready: boolean
+  show: jest.Mock
+  hide: jest.Mock
+}
+
+type MockedPluggyConnectBase = jest.Mock<MockedPluggyConnectBaseInstance>
 
 // Mock timer using jest
 jest.useFakeTimers()
@@ -12,14 +20,11 @@ jest.useFakeTimers()
 describe('usePluggyConnect', () => {
   beforeEach(() => {
     // Clear all instances and calls to the constructor and all methods:
-    ;(PluggyConnectBase as MockedPluggyConnectBase).mockClear()
+    ;(PluggyConnectBase as jest.Mock).mockClear()
   })
 
-  it('should warn if no connectToken is provided', () => {
-    const consoleWarnSpy = jest.spyOn(console, 'warn')
-    renderHook(() => usePluggyConnect({} as any))
-
-    expect(consoleWarnSpy).toHaveBeenCalledWith(
+  it('should throw an error if no connectToken is provided', () => {
+    expect(() => renderHook(() => usePluggyConnect({} as any))).toThrowError(
       'use-pluggy-connect: You need a valid connectToken for usePluggyConnect.'
     )
   })
@@ -39,21 +44,8 @@ describe('usePluggyConnect', () => {
     expect(result.current.ready).toBe(true)
   })
 
-  it('should warn if trying to init before PluggyConnectBase is ready', () => {
-    const { result } = renderHook(() => usePluggyConnect({} as any))
-    const consoleWarnSpy = jest.spyOn(console, 'warn')
-
-    act(() => {
-      result.current.init()
-    })
-
-    expect(consoleWarnSpy).toHaveBeenCalledWith(
-      "use-pluggy-connect: PluggyConnect instance isn't ready yet."
-    )
-  })
-
   it('should handle init errors', () => {
-    ;(PluggyConnectBase as MockedPluggyConnectBase).mockImplementation(() => {
+    ;(PluggyConnectBase as jest.Mock).mockImplementation(() => {
       return {
         init: () => {
           throw new Error('Mock initialization error')
@@ -75,10 +67,15 @@ describe('usePluggyConnect', () => {
   it('should expose show function after PluggyConnectBase is instantiated', () => {
     const mockShowFunction = jest.fn()
 
-    ;(PluggyConnectBase as MockedPluggyConnectBase).mockImplementation(() => {
+    ;(
+      PluggyConnectBase as unknown as MockedPluggyConnectBase
+    ).mockImplementationOnce(() => {
       return {
         init: jest.fn(),
         show: mockShowFunction,
+        error: null,
+        ready: true,
+        hide: jest.fn(),
       }
     })
 

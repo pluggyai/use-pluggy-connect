@@ -16,7 +16,7 @@ export const usePluggyConnect = (options: PluggyConnectProps) => {
 
   useEffect(() => {
     if (!options.connectToken) {
-      console.warn(
+      throw new Error(
         'use-pluggy-connect: You need a valid connectToken for usePluggyConnect.'
       )
       return
@@ -28,7 +28,7 @@ export const usePluggyConnect = (options: PluggyConnectProps) => {
 
   const init = useCallback(() => {
     if (!pluggyConnect) {
-      console.warn(
+      throw new Error(
         "use-pluggy-connect: PluggyConnect instance isn't ready yet."
       )
       return
