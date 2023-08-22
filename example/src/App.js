@@ -8,9 +8,7 @@ const App = () => {
   }, [])
 
   const { init, error, ready } = usePluggyConnect({
-    url: 'https://connect.pluggy.dev',
-    connectToken:
-      'your-connect-token',
+    connectToken: 'your-connect-token',
     onEvent: handleEvent,
   })
 
