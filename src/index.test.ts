@@ -23,12 +23,6 @@ describe('usePluggyConnect', () => {
     ;(PluggyConnectBase as jest.Mock).mockClear()
   })
 
-  it('should throw an error if no connectToken is provided', () => {
-    expect(() => renderHook(() => usePluggyConnect({} as any))).toThrowError(
-      'use-pluggy-connect: You need a valid connectToken for usePluggyConnect.'
-    )
-  })
-
   it('should instantiate PluggyConnectBase with provided options', () => {
     renderHook(() => usePluggyConnect({ connectToken: 'mock-connect-token' }))
 

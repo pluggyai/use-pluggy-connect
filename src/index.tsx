@@ -19,7 +19,6 @@ export const usePluggyConnect = (options: PluggyConnectProps) => {
       throw new Error(
         'use-pluggy-connect: You need a valid connectToken for usePluggyConnect.'
       )
-      return
     }
 
     const pluggyConnect_ = new PluggyConnectBase(options)
@@ -31,7 +30,6 @@ export const usePluggyConnect = (options: PluggyConnectProps) => {
       throw new Error(
         "use-pluggy-connect: PluggyConnect instance isn't ready yet."
       )
-      return
     }
 
     try {
