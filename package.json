@@ -1,6 +1,6 @@
 {
   "name": "use-pluggy-connect",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "React hook to integrate Pluggy Connect.",
   "author": "NicolasMontone",
   "license": "MIT",
