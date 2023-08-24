@@ -15,6 +15,10 @@ export const usePluggyConnect = (options: PluggyConnectProps) => {
   )
 
   useEffect(() => {
+    const isBrowser = typeof window !== 'undefined'
+
+    if (!isBrowser) return // Exit the effect if not in browser
+
     if (!options.connectToken) {
       throw new Error(
         'use-pluggy-connect: You need a valid connectToken for usePluggyConnect.'
