@@ -1,7 +1,7 @@
-import { useEffect, useState, useCallback } from 'react'
-import {
+import { useEffect, useState, useCallback, useRef } from 'react'
+import type {
   PluggyConnectProps as PluggyConnectProps_,
-  PluggyConnect as PluggyConnectBase,
+  PluggyConnect as PluggyConnectBaseType,
 } from 'pluggy-connect-sdk'
 
 export type PluggyConnectProps = PluggyConnectProps_
@@ -10,23 +10,32 @@ const noop = () => {}
 
 export const usePluggyConnect = (options: PluggyConnectProps) => {
   const [error, setError] = useState<Error | null>(null)
-  const [pluggyConnect, setPluggyConnect] = useState<PluggyConnectBase | null>(
-    null
-  )
+  const [pluggyConnect, setPluggyConnect] =
+    useState<PluggyConnectBaseType | null>(null)
+
+  const pluggyConnectBase = useRef<typeof PluggyConnectBaseType | null>(null)
 
   useEffect(() => {
     const isBrowser = typeof window !== 'undefined'
 
-    if (!isBrowser) return // Exit the effect if not in browser
+    if (!isBrowser) return // Exit the effect if not in the browser
 
-    if (!options.connectToken) {
-      throw new Error(
-        'use-pluggy-connect: You need a valid connectToken for usePluggyConnect.'
-      )
+    async function loadPluggyConnect() {
+      if (!options.connectToken) {
+        throw new Error(
+          'use-pluggy-connect: You need a valid connectToken for usePluggyConnect.'
+        )
+      }
+
+      const { PluggyConnect } = await import('pluggy-connect-sdk')
+
+      pluggyConnectBase.current = PluggyConnect
+
+      const pluggyConnect_ = new PluggyConnect(options)
+      setPluggyConnect(pluggyConnect_)
     }
 
-    const pluggyConnect_ = new PluggyConnectBase(options)
-    setPluggyConnect(pluggyConnect_)
+    loadPluggyConnect()
   }, [options.connectToken])
 
   const init = useCallback(() => {

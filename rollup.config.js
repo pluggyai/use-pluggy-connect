@@ -13,20 +13,22 @@ export default {
       file: pkg.main,
       format: 'cjs',
       exports: 'named',
-      sourcemap: true
+      sourcemap: true,
+      inlineDynamicImports: true,
     },
     {
       file: pkg.module,
       format: 'es',
       exports: 'named',
-      sourcemap: true
-    }
+      sourcemap: true,
+      inlineDynamicImports: true,
+    },
   ],
   plugins: [
     external(),
     url({ exclude: ['**/*.svg'] }),
     resolve(),
     typescript(),
-    commonjs({ extensions: ['.js', '.ts'] })
-  ]
+    commonjs({ extensions: ['.js', '.ts'] }),
+  ],
 }
