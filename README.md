@@ -30,6 +30,8 @@ bun install --save use-pluggy-connect
 
 ## Usage
 
+### React
+
 ```tsx
 import React, { useCallback } from 'react'
 
@@ -59,4 +61,22 @@ const App = () => {
   )
 }
 export default App
+```
+
+### Nextjs
+
+
+```tsx
+'use client'
+
+import usePluggyConnect from 'use-pluggy-connect'
+
+export default function OpenPluggyButton() {
+  const { init } = usePluggyConnect({
+    connectToken:
+      '...',
+  })
+
+  return <button onClick={init}>Open Pluggy</button>
+}
 ```
