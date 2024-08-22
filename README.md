@@ -10,12 +10,30 @@
 npm install --save use-pluggy-connect
 ```
 
+or
+
+```bash
+pnpm install --save use-pluggy-connect
+```
+
+or
+
+```bash
+yarn add use-pluggy-connect
+```
+
+or
+
+```bash
+bun install --save use-pluggy-connect
+```
+
 ## Usage
 
 ```tsx
 import React, { useCallback } from 'react'
 
-import { usePluggyConnect } from 'use-pluggy-connect'
+import usePluggyConnect from 'use-pluggy-connect'
 
 const App = () => {
   const handleEvent = useCallback((payload) => {

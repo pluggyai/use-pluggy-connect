@@ -5,13 +5,10 @@
   "author": "NicolasMontone",
   "license": "MIT",
   "repository": "pluggyai/use-pluggy-connect",
-  "main": "dist/index.js",
-  "module": "dist/index.es.js",
-  "types": "dist/index.d.ts",
-  "jsnext:main": "dist/index.es.js",
+  "main": "lib/index.js",
   "engines": {
     "semantic-release": "semantic-release",
-    "node": ">=16"
+    "node": ">=18"
   },
   "keywords": [
     "react",
@@ -19,47 +16,28 @@
     "pluggy"
   ],
   "scripts": {
-    "test": "cross-env CI=1 react-scripts test --env=jsdom",
-    "test:watch": "react-scripts test --env=jsdom",
-    "build": "rollup -c && tsc -d --emitDeclarationOnly --noEmit false --declarationDir dist",
-    "start": "rollup -c -w",
+    "build": "tsc",
     "prepare": "npm run build",
     "predeploy": "cd example && npm install && npm run build",
     "deploy": "gh-pages -d example/build"
   },
-  "devDependencies": {
-    "@babel/core": "^7.22.10",
-    "@babel/runtime": "^7.22.10",
-    "@rollup/plugin-babel": "^6.0.3",
-    "@rollup/plugin-commonjs": "^25.0.4",
-    "@rollup/plugin-node-resolve": "^15.2.1",
-    "@rollup/plugin-typescript": "^11.1.2",
-    "@rollup/plugin-url": "^8.0.1",
-    "@semantic-release/commit-analyzer": "^10.0.1",
-    "@semantic-release/git": "^10.0.1",
-    "@semantic-release/github": "^9.0.4",
-    "@semantic-release/npm": "^10.0.5",
-    "@semantic-release/release-notes-generator": "^11.0.4",
-    "@testing-library/react-hooks": "^8.0.1",
-    "@types/jest": "^29.5.4",
-    "@types/react": "^17.0.0",
-    "cross-env": "^7.0.3",
-    "gh-pages": "^6.0.0",
-    "react": "^17.0.0",
-    "react-dom": "^17.0.0",
-    "react-scripts": "^5.0.1",
-    "react-test-renderer": "^17.0.0",
-    "rollup": "^2.78.0",
-    "rollup-plugin-peer-deps-external": "^2.2.4",
-    "tslib": "^2.6.2",
-    "typescript": "^4.9.5"
+  "dependencies": {
+    "pluggy-connect-sdk": "^2.8.1"
   },
   "peerDependencies": {
     "react": "^16.8.0 || ^17.0.0 || ^18.0.0",
     "react-dom": "^16.8.0 || ^17.0.0 || ^18.0.0"
   },
-  "dependencies": {
-    "pluggy-connect-sdk": "^2.7.0"
+  "devDependencies": {
+    "@semantic-release/commit-analyzer": "^10.0.1",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/github": "^9.0.4",
+    "@semantic-release/npm": "^10.0.5",
+    "@semantic-release/release-notes-generator": "^11.0.4",
+    "@types/react": "^18.3.4",
+    "gh-pages": "^6.0.0",
+    "react": "^18.3.1",
+    "typescript": "^5.5.4"
   },
   "peerDependenciesMeta": {
     "typescript": {
