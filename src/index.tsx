@@ -8,7 +8,7 @@ export type PluggyConnectProps = PluggyConnectProps_
 
 const noop = () => {}
 
-export const usePluggyConnect = (options: PluggyConnectProps) => {
+const usePluggyConnect = (options: PluggyConnectProps) => {
   const [error, setError] = useState<Error | null>(null)
   const [pluggyConnect, setPluggyConnect] =
     useState<PluggyConnectBaseType | null>(null)
@@ -67,3 +67,5 @@ export const usePluggyConnect = (options: PluggyConnectProps) => {
     hide: pluggyConnect ? pluggyConnect.hide : noop,
   }
 }
+
+export default usePluggyConnect
