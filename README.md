@@ -80,3 +80,8 @@ export default function OpenPluggyButton() {
   return <button onClick={init}>Open Pluggy</button>
 }
 ```
+
+#### TODOS: 
+
+- [ ] Add tests
+- [ ] Improve examples
