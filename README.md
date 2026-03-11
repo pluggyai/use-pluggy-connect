@@ -81,7 +81,19 @@ export default function OpenPluggyButton() {
 }
 ```
 
-#### TODOS: 
+## Configurations
+
+`usePluggyConnect` accepts all [`PluggyConnectProps`](https://github.com/pluggyai/pluggy-connect#configurations) from `pluggy-connect-sdk`. Notable options:
+
+| Property | Description | Type | Default |
+| -------- | ----------- | ---- | ------- |
+| `connectToken` | Your Pluggy Connect token (required). | `string` | N/A |
+| `connectorSortAlphabetically` | If set to `true`, connectors will be sorted alphabetically (A-Z) instead of by usage. | `boolean` | `false` |
+| `onSuccess` | Called when an Item has been created/updated successfully. | `(data: { item: Item }) => void` | No op |
+| `onError` | Called on errors. | `(error: { message: string }) => void` | No op |
+| `onEvent` | Called for specific user interaction events. | `(payload: ConnectEventPayload) => void` | No op |
+
+#### TODOS:
 
 - [ ] Add tests
 - [ ] Improve examples
