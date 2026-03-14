@@ -4,7 +4,10 @@ import type {
   PluggyConnect as PluggyConnectBaseType,
 } from 'pluggy-connect-sdk'
 
-export type PluggyConnectProps = PluggyConnectProps_
+export type PluggyConnectProps = PluggyConnectProps_ & {
+  /*! If true, connectors will be sorted alphabetically (A-Z) instead of by usage */
+  connectorSortAlphabetically?: boolean
+}
 
 const noop = () => {}
 
