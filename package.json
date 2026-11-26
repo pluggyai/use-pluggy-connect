@@ -29,14 +29,15 @@
     "react-dom": "^16.8.0 || ^17.0.0 || ^18.0.0"
   },
   "devDependencies": {
-    "@semantic-release/commit-analyzer": "^10.0.1",
-    "@semantic-release/git": "^10.0.1",
-    "@semantic-release/github": "^9.0.4",
-    "@semantic-release/npm": "^10.0.5",
-    "@semantic-release/release-notes-generator": "^11.0.4",
+    "@semantic-release/commit-analyzer": "13.0.1",
+    "@semantic-release/git": "10.0.1",
+    "@semantic-release/github": "12.0.10",
+    "@semantic-release/npm": "13.2.0",
+    "@semantic-release/release-notes-generator": "14.1.1",
     "@types/react": "^18.3.4",
     "gh-pages": "^6.0.0",
     "react": "^18.3.1",
+    "semantic-release": "25.0.9",
     "typescript": "^5.5.4"
   },
   "peerDependenciesMeta": {
@@ -52,7 +53,12 @@
     "plugins": [
       "@semantic-release/commit-analyzer",
       "@semantic-release/release-notes-generator",
-      "@semantic-release/npm",
+      [
+        "@semantic-release/npm",
+        {
+          "provenance": true
+        }
+      ],
       "@semantic-release/github",
       [
         "@semantic-release/git",

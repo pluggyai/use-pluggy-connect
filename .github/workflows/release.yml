@@ -7,15 +7,21 @@ jobs:
   release:
     name: Release
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
+      # npm trusted publishing (OIDC): no long-lived npm token in the repo.
+      id-token: write
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v6.0.2
         with:
           fetch-depth: 0
       - name: Setup Node.js
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v6.4.0
         with:
-          node-version: 24.22.1
+          node-version: '24.22.1'
       - name: Install dependencies
         run: npm ci --legacy-peer-deps
       - name: Build library
@@ -23,5 +29,4 @@ jobs:
       - name: Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_PUBLIC_WRITE_TOKEN }}
-        run: npx semantic-release
+        run: npx --no-install semantic-release
